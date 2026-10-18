@@ -10,7 +10,7 @@ class MainLayout extends StatefulWidget {
 }
 
 class _MainLayoutState extends State<MainLayout> {
-  // 1. Biến lưu vị trí tab đang được chọn (0: Inbox, 1: Tasks, 2: Focus, 3: AI)
+  // 1. Biến lưu vị trí tab đang được chọn (0: Inbox, 1: Tasks, 2: Projects & Teams, 3: Others)
   int currentIndex = 0;
 
   // 2. Danh sách các màn hình tương ứng với các nút ở thanh bên dưới
