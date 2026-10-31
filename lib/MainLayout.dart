@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:do_an_flutter/Home/task.dart';
 import 'package:do_an_flutter/Home/inbox.dart';
+import 'package:do_an_flutter/features/tasks/views/task_detail_bottom_sheet.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -10,10 +11,8 @@ class MainLayout extends StatefulWidget {
 }
 
 class _MainLayoutState extends State<MainLayout> {
-  // 1. Biến lưu vị trí tab đang được chọn (0: Inbox, 1: Tasks, 2: Projects & Teams, 3: Others)
   int currentIndex = 0;
 
-  // 2. Danh sách các màn hình tương ứng với các nút ở thanh bên dưới
   final List<Widget> pages = [
     const InboxPage(),
     const TaskPage(),
@@ -21,7 +20,6 @@ class _MainLayoutState extends State<MainLayout> {
     const Center(child: Text('Màn hình Others', style: TextStyle(color: Colors.white, fontSize: 18))),
   ];
 
-  // Danh sách tiêu đề tương ứng với từng tab
   final List<String> titles = [
     'Inbox',
     'Tasks',
@@ -29,7 +27,6 @@ class _MainLayoutState extends State<MainLayout> {
     'Others',
   ];
 
-  // 3. Hàm chuyển tab khi bấm vào từng icon
   void switchTab(int index) {
     setState(() {
       currentIndex = index;
@@ -63,7 +60,9 @@ class _MainLayoutState extends State<MainLayout> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (currentIndex == 1) TaskDetailBottomSheet.show(context);
+                  },
                   icon: const Icon(Icons.edit_outlined, color: Colors.white, size: 24),
                   padding: const EdgeInsets.all(10),
                   constraints: const BoxConstraints(),
@@ -79,17 +78,13 @@ class _MainLayoutState extends State<MainLayout> {
           ),
         ],
       ),
-
-      // 4. Đổi trang tương ứng với tab đang chọn
       body: pages[currentIndex],
-
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 20, left: 16, right: 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Thanh viên thuốc chứa các icon tab
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 decoration: BoxDecoration(
@@ -99,26 +94,19 @@ class _MainLayoutState extends State<MainLayout> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Tab 0: Inbox
                     _buildNavButton(
                       index: 0,
                       icon: Icons.inbox_outlined,
                       hasBadge: true,
                     ),
-
-                    // Tab 1: Tasks
                     _buildNavButton(
                       index: 1,
                       icon: Icons.assignment_outlined,
                     ),
-
-                    // Tab 2: Focus
                     _buildNavButton(
                       index: 2,
                       icon: Icons.center_focus_weak,
                     ),
-
-                    // Tab 3: AI
                     _buildNavButton(
                       index: 3,
                       icon: Icons.auto_awesome,
@@ -126,10 +114,7 @@ class _MainLayoutState extends State<MainLayout> {
                   ],
                 ),
               ),
-
               const SizedBox(width: 14),
-
-              // Nút tròn bên phải
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: const BoxDecoration(
@@ -145,7 +130,6 @@ class _MainLayoutState extends State<MainLayout> {
     );
   }
 
-  // Widget hỗ trợ tạo nút bấm tab có highlight khi chọn
   Widget _buildNavButton({
     required int index,
     required IconData icon,

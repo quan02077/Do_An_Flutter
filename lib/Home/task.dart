@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
+import '../features/tasks/task_main_page.dart';
 
 class TaskPage extends StatelessWidget {
   const TaskPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Nội dung trang Task ở đây',
-        style: TextStyle(color: Colors.white, fontSize: 18),
-      ),
-    );
+    return const TaskMainPage();
   }
 }
